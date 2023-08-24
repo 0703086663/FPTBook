@@ -1,25 +1,91 @@
-﻿namespace BookStore.Migrations
-{
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+﻿using System;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using BookStore.Models;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<BookStore.Models.BookDbContext>
+internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+{
+    public Configuration()
     {
-        public Configuration()
+        AutomaticMigrationsEnabled = false;
+    }
+
+    protected override void Seed(ApplicationDbContext context)
+    {
+        // Create Roles
+        var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
+        if (!roleManager.RoleExists("Admin"))
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = false;
-            ContextKey = "BookStore.Models.BookDbContext";
+            var role = new IdentityRole { Name = "Admin" };
+            roleManager.Create(role);
         }
 
-        protected override void Seed(BookStore.Models.BookDbContext context)
+        if (!roleManager.RoleExists("Staff"))
         {
-            //  This method will be called after migrating to the latest version.
+            var role = new IdentityRole { Name = "Staff" };
+            roleManager.Create(role);
+        }
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
-            //  to avoid creating duplicate seed data.
+        if (!roleManager.RoleExists("Member"))
+        {
+            var role = new IdentityRole { Name = "Member" };
+            roleManager.Create(role);
+        }
+
+        // Create Admin User
+        var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+        if (userManager.FindByName("admin@gmail.com") == null)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = "admin@gmail.com",
+                Email = "admin@gmail.com"
+            };
+
+            var result = userManager.Create(user, "admin");
+
+            if (result.Succeeded)
+            {
+                userManager.AddToRole(user.Id, "Admin");
+            }
+        }
+
+        // Create Staff User
+        if (userManager.FindByName("staff@gmail.com") == null)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = "staff@gmail.com",
+                Email = "staff@gmail.com"
+            };
+
+            var result = userManager.Create(user, "staff");
+
+            if (result.Succeeded)
+            {
+                userManager.AddToRole(user.Id, "Staff");
+            }
+        }
+
+        // Create Member User
+        if (userManager.FindByName("member@gmail.com") == null)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = "member@gmail.com",
+                Email = "member@gmail.com"
+            };
+
+            var result = userManager.Create(user, "member");
+
+            if (result.Succeeded)
+            {
+                userManager.AddToRole(user.Id, "Member");
+            }
         }
     }
 }

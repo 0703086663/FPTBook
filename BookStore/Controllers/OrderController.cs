@@ -39,10 +39,18 @@ namespace BookStore.Controllers
 
         // GET: Order/Create
         [Authorize(Roles = "Admin, Staff")]
-        public ActionResult Create(string BookId)
+        public ActionResult Create()
         {
+            using (var dbContext = new BookDbContext())
+            {
+                var books = dbContext.Books.ToList();
+
+                ViewBag.BookList = new SelectList(books, "BookId", "Title"); 
+            }
+
             return View();
         }
+
 
         // POST: Order/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
