@@ -9,6 +9,7 @@
 
     <p>
         <a class="btn btn-primary" href="@Url.Action("Create")">Create New</a>
+        <a class="btn btn-primary" href="@Url.Action("Create", "Category")">Add Category</a>
     </p>
 
     <table class="table table-bordered table-striped">
@@ -17,9 +18,9 @@
                 <th>@Html.DisplayNameFor(model => model.Image)</th>
                 <th>@Html.DisplayNameFor(model => model.Title)</th>
                 <th>@Html.DisplayNameFor(model => model.Author)</th>
-                <th>@Html.DisplayNameFor(model => model.Type)</th>
                 <th>@Html.DisplayNameFor(model => model.Price)</th>
                 <th>@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                <th>@Html.DisplayNameFor(model => model.Category.Name)</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -27,12 +28,21 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td><img src="@Html.DisplayFor(modelItem => item.Image)" style="height:100px"/></td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Image))
+                        {
+                            <img src="@Url.Content(item.Image)" style="height:100px" />
+                        }
+                        else
+                        {
+                            <p>Unavailable</p>
+                        }
+                    </td>
                     <td>@Html.DisplayFor(modelItem => item.Title)</td>
                     <td>@Html.DisplayFor(modelItem => item.Author)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Type)</td>
                     <td>@Html.DisplayFor(modelItem => item.Price)</td>
                     <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
                     <td>
                         <a class="btn btn-info" href="@Url.Action("Edit", new { id = item.BookId })">Edit</a>
                         <a class="btn btn-info" href="@Url.Action("Details", new { id = item.BookId })">Details</a>

@@ -7,32 +7,19 @@
 <div class="container">
     <h2>Order List</h2>
 
-    <p>
-        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
-    </p>
-
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.BookId)
+                    Order ID
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CustomerId)
+                    Customer ID
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Delivery)
+                    Created Date
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Payment)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.OrderPrice)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedDate)
-                </th>
-                <th></th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -40,27 +27,16 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.BookId)
+                        @Html.DisplayFor(modelItem => item.OrderId)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CustomerId)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Delivery)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Payment)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderPrice)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.CreatedDate)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.OrderId }, new { @class = "btn btn-primary btn-sm" }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.OrderId }, new { @class = "btn btn-info btn-sm" }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.OrderId }, new { @class = "btn btn-danger btn-sm" })
+                        @Html.ActionLink("Details", "Details", new { id = item.OrderId }, new { @class = "btn btn-info btn-sm" })
                     </td>
                 </tr>
             }

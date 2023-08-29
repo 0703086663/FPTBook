@@ -24,33 +24,18 @@
         <div class="row">
             <div class="col-lg-4 col-md-5 order-md-1 order-2">
                 <div class="blog__sidebar">
-                    <div class="blog__sidebar__search">
-                        <form action="#">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button"><span class="icon_search"></span></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <!-- Other sidebar content -->
                     <div class="blog__sidebar__item">
                         <h4>Categories</h4>
                         <ul>
-                            <li><a href="#">All</a></li>
-                            <li><a href="#">Beauty (20)</a></li>
-                            <li><a href="#">Food (5)</a></li>
-                            <li><a href="#">Life Style (9)</a></li>
-                            <li><a href="#">Travel (10)</a></li>
+                            @foreach (var category in ViewBag.CategoryList)
+                            {
+                                <li><a href="/?query=@category.CategoryId">@category.Name</a></li>
+                            }
                         </ul>
+
                     </div>
-                    <div class="blog__sidebar__item">
-                        <h4>Search By</h4>
-                        <div class="blog__sidebar__item__tags">
-                            <span>@Html.DisplayFor(Model => Model.Type)</span>
-                            <span>@Html.DisplayFor(Model => Model.Title)</span>
-                        </div>
-                    </div>
+                    <!-- Other sidebar content -->
                 </div>
             </div>
             <div class="col-lg-8 col-md-7 order-md-1 order-1">
@@ -65,8 +50,10 @@
                         <div class="col-lg-12">
                             <div class="blog__details__widget">
                                 <ul>
-                                    <li><h4><span>Categories:</span> @Html.DisplayFor(Model => Model.Type)</h4></li>
+                                    <!-- Display the book's category -->
+                                    <li><h4><span>Category:</span> @Html.DisplayFor(Model => Model.Category.Name)</h4></li>
                                     <li><h4><span>Price:</span> $@Html.DisplayFor(Model => Model.Price)</h4></li>
+                                    <li><a href="/Cart/AddToCart?bookId=@Html.DisplayFor(Model => Model.BookId)" class="btn btn-primary">Add To Cart</a></li>
                                 </ul>
                                 <div class="blog__details__social">
                                     <a href="#"><i class="fab fa-facebook"></i></a>

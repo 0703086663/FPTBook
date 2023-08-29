@@ -32,19 +32,8 @@
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
-                            <div class="header__top__right__social">
-                                <a href="#"><i class="fab fa-facebook"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-pinterest"></i></a>
-                            </div>
                             <div class="header__top__right__language">
-                                <div>English</div>
-                                <span class="arrow_carrot-down"></span>
-                                <ul>
-                                    <li><a href="#">English</a></li>
-                                    <li><a href="#">Vietnamese</a></li>
-                                </ul>
+                                <a href="/Cart"><i class="fa fa-shopping-cart"></i></a>
                             </div>
                             <div class="header__top__right__auth">
                                 @Html.Partial("_LoginPartial")
@@ -63,7 +52,7 @@
                                                     style="height:8vh"></a>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-9">
                     <nav class="header__menu">
                         <ul>
                             <li class="active"><a href="/">Home</a></li>
@@ -72,22 +61,28 @@
                                 <li>
                                     <a href="#">Books</a>
                                     <ul class="header__menu__dropdown">
-                                        <li><a href="/book">Book Management</a></li>
+                                        <li><a href="/book">Management</a></li>
                                         <li><a href="/book/create">Create Book</a></li>
-                                        <li><a href="/book">Delete Book</a></li>
-                                        <li><a href="/book">Edit Book</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#">Orders</a>
+                                    <a href="#">Categories</a>
                                     <ul class="header__menu__dropdown">
-                                        <li><a href="/order">Order Manage</a></li>
-                                        <li><a href="/order/create">Create Order</a></li>
-                                        <li><a href="/order">Delete Order</a></li>
-                                        <li><a href="/order">Edit Order</a></li>
+                                        <li><a href="/Category">Management</a></li>
+                                        <li><a href="/Category/create">Create Category</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="/role/create">Role</a></li>
+                                if (User.IsInRole("Admin"))
+                                {
+                                    <li><a href="/order">Orders</a></li>
+                                    <li>
+                                        <a href="#">Roles</a>
+                                        <ul class="header__menu__dropdown">
+                                            <li><a href="/Role">Management</a></li>
+                                            <li><a href="/Role/create">Create Role</a></li>
+                                        </ul>
+                                    </li>
+                                }
                             }
                             <li><a href="/home/contact">Contact</a></li>
                         </ul>

@@ -5,9 +5,9 @@
 }
 
 <div class="container">
-    <h2>Create</h2>
+    <h2 class="text-center">Create book</h2>
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Create", "Book", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
@@ -26,52 +26,45 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(model => model.Type, "Select Type", new { @class = "form-control", required = "required" })
-                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label" })
-                    <div class="input-group">
-                        <span class="input-group-addon">$</span>
-                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @placeholder = "Price", required = "required" } })
-                    </div>
-                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.CategoryId, "Category", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("CategoryId", ViewBag.CategoryId as SelectList, new { @class = "form-control", required = "required" })
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
-                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Description", required = "required", rows = "6" })
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Description", rows = "1" })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control", @placeholder = "Image URL", required = "required" } })
-                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                    @Html.Label("Upload Image", htmlAttributes: new { @class = "control-label" })
+                    <input type="file" name="ImageFile" id="ImageFile" accept="image/*" />
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Created Date", required = "required" } })
-                    @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label" })
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @placeholder = "Price", required = "required", min = 1000, step = 1000 } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                 </div>
             </div>
+
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="text-center">
                 <button type="submit" class="btn btn-primary">Create</button>
             </div>
         </div>
     }
-</div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 </div>
 
 @section Scripts {

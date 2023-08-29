@@ -1,91 +1,24 @@
-﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using BookStore.Models;
-
-internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+﻿namespace BookStore.Migrations
 {
-    public Configuration()
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<BookStore.Models.BookDbContext>
     {
-        AutomaticMigrationsEnabled = false;
-    }
-
-    protected override void Seed(ApplicationDbContext context)
-    {
-        // Create Roles
-        var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-
-        if (!roleManager.RoleExists("Admin"))
+        public Configuration()
         {
-            var role = new IdentityRole { Name = "Admin" };
-            roleManager.Create(role);
+            AutomaticMigrationsEnabled = true;
+            ContextKey = "BookStore.Models.BookDbContext";
         }
 
-        if (!roleManager.RoleExists("Staff"))
+        protected override void Seed(BookStore.Models.BookDbContext context)
         {
-            var role = new IdentityRole { Name = "Staff" };
-            roleManager.Create(role);
-        }
+            //  This method will be called after migrating to the latest version.
 
-        if (!roleManager.RoleExists("Member"))
-        {
-            var role = new IdentityRole { Name = "Member" };
-            roleManager.Create(role);
-        }
-
-        // Create Admin User
-        var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-
-        if (userManager.FindByName("admin@gmail.com") == null)
-        {
-            var user = new ApplicationUser
-            {
-                UserName = "admin@gmail.com",
-                Email = "admin@gmail.com"
-            };
-
-            var result = userManager.Create(user, "admin");
-
-            if (result.Succeeded)
-            {
-                userManager.AddToRole(user.Id, "Admin");
-            }
-        }
-
-        // Create Staff User
-        if (userManager.FindByName("staff@gmail.com") == null)
-        {
-            var user = new ApplicationUser
-            {
-                UserName = "staff@gmail.com",
-                Email = "staff@gmail.com"
-            };
-
-            var result = userManager.Create(user, "staff");
-
-            if (result.Succeeded)
-            {
-                userManager.AddToRole(user.Id, "Staff");
-            }
-        }
-
-        // Create Member User
-        if (userManager.FindByName("member@gmail.com") == null)
-        {
-            var user = new ApplicationUser
-            {
-                UserName = "member@gmail.com",
-                Email = "member@gmail.com"
-            };
-
-            var result = userManager.Create(user, "member");
-
-            if (result.Succeeded)
-            {
-                userManager.AddToRole(user.Id, "Member");
-            }
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
+            //  to avoid creating duplicate seed data.
         }
     }
 }
